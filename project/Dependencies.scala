@@ -5,7 +5,9 @@ object Dependencies {
 
   val munit = "org.scalameta" %% "munit" % "0.7.29" % Test
 
-  val otelSdk = "io.opentelemetry" % "opentelemetry-sdk" % "1.28.0"
+  val otelVersion   = "1.29.0"
+  val otelSdk       = "io.opentelemetry"           % "opentelemetry-sdk"       % otelVersion
+  val otelJavaAgent = "io.opentelemetry.javaagent" % "opentelemetry-javaagent" % otelVersion
 
   val akkaStream        = "com.typesafe.akka" %% "akka-stream"         % AkkaVersion
   val akkaStreamTestkit = "com.typesafe.akka" %% "akka-stream-testkit" % AkkaVersion % Test

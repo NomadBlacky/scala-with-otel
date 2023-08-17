@@ -9,6 +9,13 @@ ThisBuild / githubWorkflowPublishTargetBranches := Seq.empty
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("scalafmtCheck", "scalafmtSbtCheck", "test")))
 
 lazy val simple_app = (project in file("simple_app"))
+  .enablePlugins(JavaAgent)
   .settings(
-    libraryDependencies ++= Seq(otelSdk, munit)
+    libraryDependencies ++= Seq(otelSdk, munit),
+    javaAgents += otelJavaAgent % "dist;runtime",
+    run / javaOptions ++= Seq(
+      "-Dotel.traces.exporter=logging",
+      "-Dotel.metrics.exporter=logging",
+      "-Dotel.logs.exporter=logging"
+    )
   )
