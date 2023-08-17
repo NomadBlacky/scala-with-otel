@@ -11,7 +11,7 @@ object Main:
 
   def main(args: Array[String]): Unit =
     val mainSpan = tracer.spanBuilder("main").startSpan()
-    Using(mainSpan.makeCurrent()) { _ =>
+    Using(mainSpan.makeCurrent()): _ =>
       println("Hello, world!")
       println(s"sum(1, 2) = ${sum(1, 2)}")
 
@@ -20,13 +20,13 @@ object Main:
         .spanBuilder("heavy-task")
         .setParent(Context.current().`with`(mainSpan)) // this is not required.
         .startSpan()
-      Using(heavyTaskSpan.makeCurrent()) { _ =>
+
+      Using(heavyTaskSpan.makeCurrent()): _ =>
         heavyTask()
-      }
+
       heavyTaskSpan.end()
 
       println("Done!")
-    }
 
   def sum(a: Int, b: Int): Int = a + b
 
