@@ -1,15 +1,18 @@
 package dev.nomadblacky.scala_with_otel.simple_app
 
-import io.opentelemetry.api.{GlobalOpenTelemetry, OpenTelemetry}
+import io.opentelemetry.api.GlobalOpenTelemetry
 import io.opentelemetry.context.Context
-import io.opentelemetry.sdk.OpenTelemetrySdk
 
 import scala.util.Using
 
 object Main:
+
+  // Get a tracer from GlobalOpenTelemetry
   private val tracer = GlobalOpenTelemetry.getTracer("manual-instrumentation")
 
   def main(args: Array[String]): Unit =
+    // Start a span
+    // https://opentelemetry.io/docs/instrumentation/java/manual/#create-spans
     val mainSpan = tracer.spanBuilder("main").startSpan()
     Using(mainSpan.makeCurrent()): _ =>
       try
