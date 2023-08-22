@@ -14,6 +14,10 @@ lazy val simple_app = (project in file("simple_app"))
     libraryDependencies ++= Seq(otelSdk, munit),
     javaAgents += otelJavaAgent % "dist;runtime",
     run / javaOptions ++= Seq(
+      // Configure OpenTelemetry Resource
+      // https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md#opentelemetry-resource
+      "-Dotel.service.name=simple_app",
+      "-Dotel.resource.attributes=key1=value1,key2=value2",
       // Configure exporters
       // https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md#exporters
       "-Dotel.traces.exporter=logging-otlp",
